@@ -19,13 +19,6 @@ This project analyzes e-commerce sales data to generate business insights such a
 - Found that higher discounts negatively impact profit
 - Highlighted top-performing states by revenue
 
-## 📁 Project Structure
-ecommerce-sales-analytics-dashboard/
- ├── data/
- ├── charts/
- ├── analysis.py
- └── README.md
-
 ## 📈 Visualizations
 
 ### Monthly Sales Trend
