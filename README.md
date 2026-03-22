@@ -20,7 +20,7 @@ This project analyzes e-commerce sales data to generate business insights such a
 - Highlighted top-performing states by revenue
 
 ## 📁 Project Structure
-ecommerce-analytics/
+ecommerce-sales-analytics-dashboard/
  ├── data/
  ├── charts/
  ├── analysis.py
