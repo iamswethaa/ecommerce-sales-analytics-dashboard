@@ -4,9 +4,9 @@ import pandas as pd
 
 df = pd.read_csv("data/sales.csv", encoding='latin1')
 
-print("✅ Data Loaded Successfully\n")
+print("Data Loaded Successfully\n")
 
-# INITIAL INSPECTION
+# ]INITIAL INSPECTION
 
 print("🔹 First 5 Rows:")
 print(df.head(), "\n")
@@ -22,48 +22,71 @@ print(df.columns, "\n")
 print("🔹 Missing Values:")
 print(df.isnull().sum(), "\n")
 
-# HANDLE MISSING VALUES
+# DATA CLEANING
 
-# Fill Postal Code if missing
-if 'Postal Code' in df.columns:
-    df['Postal Code'] = df['Postal Code'].fillna(0)
-
-# Drop rows where important values are missing
-df = df.dropna(subset=['Sales', 'Profit'])
-
-print("✅ Missing values handled\n")
-
-# REMOVE DUPLICATES
-
+# Remove duplicates
 df = df.drop_duplicates()
 
-print("✅ Duplicates removed\n")
-
-# FIX DATA TYPES
-
 # Convert Order Date to datetime
-if 'Order Date' in df.columns:
-    df['Order Date'] = pd.to_datetime(df['Order Date'], format='%d-%m-%y')
-print("✅ Data types fixed\n")
+df['Order Date'] = pd.to_datetime(df['Order Date'], format='%d-%m-%y')
+
+print("✅ Data cleaned\n")
 
 # FEATURE ENGINEERING
 
-# Revenue (same as Sales for now)
+# Revenue
 df['Revenue'] = df['Sales']
 
-# Extract Month & Year
+# Month & Year
 df['Month'] = df['Order Date'].dt.month
 df['Year'] = df['Order Date'].dt.year
 
 # Profit Margin
 df['Profit Margin'] = df['Profit'] / df['Sales']
 
-print("✅ New columns created\n")
+print("✅ New features created\n")
 
-# FINAL OUTPUT
+# DATA ANALYSIS
 
-print("🔹 Cleaned Data Preview:")
-print(df.head())
+# Total Revenue & Profit
+total_revenue = df['Revenue'].sum()
+total_profit = df['Profit'].sum()
+
+print("💰 Total Revenue:", total_revenue)
+print("📈 Total Profit:", total_profit)
+
+# Top 5 Products
+top_products = df.groupby('Product Name')['Revenue'].sum().sort_values(ascending=False).head(5)
+print("\n🏆 Top 5 Products:")
+print(top_products)
+
+# Top 5 States
+state_sales = df.groupby('State')['Revenue'].sum().sort_values(ascending=False).head(5)
+print("\n🌎 Top 5 States by Sales:")
+print(state_sales)
+
+# Sales by Segment
+segment_sales = df.groupby('Segment')['Revenue'].sum()
+print("\n👥 Sales by Segment:")
+print(segment_sales)
+
+# Monthly Sales
+monthly_sales = df.groupby('Month')['Revenue'].sum()
+print("\n📆 Monthly Sales:")
+print(monthly_sales)
+
+# Discount vs Profit
+discount_impact = df.groupby('Discount')['Profit'].mean()
+print("\n💸 Discount vs Profit:")
+print(discount_impact.head())
+
+# Loss-making products
+loss_products = df.groupby('Product Name')['Profit'].sum().sort_values().head(5)
+print("\n⚠️ Top 5 Loss-Making Products:")
+print(loss_products)
+
+# SAVE CLEANED DATA
 
 df.to_csv("data/cleaned_data.csv", index=False)
-print("✅ Cleaned data saved to CSV")
+
+print("\nCleaned data saved to CSV")
