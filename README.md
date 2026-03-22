@@ -12,6 +12,7 @@ This project analyzes e-commerce sales data to generate business insights such a
 ## 🛠️ Tech Stack
 - Python (Pandas, Matplotlib)
 - CSV Dataset
+- SQL
 
 ## 📊 Key Insights
 - Identified top-performing products contributing highest revenue
